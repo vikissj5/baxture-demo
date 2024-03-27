@@ -5,6 +5,7 @@ import { Grid, GridCol } from "@mantine/core";
 import { getData } from "./api";
 import { useEffect, useState } from "react";
 
+
 export default function HomePage() {
   const [cards, setCards] = useState([]);
   const [screenSize, setScreenSize] = useState<number>(() => {
