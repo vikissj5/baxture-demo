@@ -7,7 +7,12 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [cards, setCards] = useState([]);
-  const [screenSize, setScreenSize] = useState<number>(window.innerWidth); // Initialize with the initial screen width
+  const [screenSize, setScreenSize] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth; // Initialize with the initial screen width
+    }
+    return 0; // Default value if window is not available
+  });
 
   useEffect(() => {
     async function getCards() {
@@ -21,11 +26,13 @@ export default function HomePage() {
       setScreenSize(window.innerWidth); // Update screen size on resize
     };
 
-    window.addEventListener("resize", handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", handleResize); // Add event listener if running in the browser
 
-    return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup on component unmount
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize); // Cleanup 
+      };
+    }
   }, []);
 
   const deleteItem = (id: number) => {

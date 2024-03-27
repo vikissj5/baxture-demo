@@ -17,14 +17,14 @@ type CardsProps = {
 
 const Cards = ({ title, email, domain, phone, id, deleteAction }: CardsProps) => {
     const [isFollwing, setIsFollowing] = useState(false);
-    const [ava, setava] = useState<string>();
+    const [avatars, setAvatars] = useState<string>();
 
     useEffect(() => {
-        async function getAvat() {
+        async function getAvatarFor() {
             const avatarName = await getAvatar(title);
-            setava(avatarName);
+            setAvatars(avatarName);
         }
-        getAvat();
+        getAvatarFor();
     }, [])
 
     const handleDelete: MouseEventHandler<HTMLButtonElement> = (e: any) => {
@@ -53,7 +53,7 @@ const Cards = ({ title, email, domain, phone, id, deleteAction }: CardsProps) =>
                 flexDirection: 'column'
             }}>
                 <Tooltip label={title} withArrow>
-                    <Avatar src={`data:image/svg+xml,${encodeURIComponent(ava ?? "")}`} alt="avatar" size={"125"} ta={'center'} />
+                    <Anchor href={`https://www.${domain}`} target="_blank"><Avatar src={`data:image/svg+xml,${encodeURIComponent(avatars ?? "")}`} alt="avatar" size={"125"} ta={'center'} /></Anchor>
                 </Tooltip>
 
                 <Text size='lg' style={{
